@@ -1,12 +1,12 @@
-# Created 2026-02-16 seg 10:03
+# Created 2026-02-16 seg 11:47
 #+title: Structure and interpretation of computer programs(SICP)
 #+author: Erik Ap Gomes Rocha
 #+export_file_name: ~/Projetos/Codigos/Estudos-em-Redes-e-Linguagens/linguagens/notas_literarias_jaks.org
 * Source
 
-Author: Hal Abelson, Jerry Sussman and Julie Sussman
-Title: Structure and interpretation of computer programs(SICP)
-Year: 1993
+- =Author=: Hal Abelson, Jerry Sussman and Julie Sussman
+- =Title=: Structure and interpretation of computer programs(SICP)
+- =Year=: 1993
 * Summary
 
 
@@ -24,6 +24,9 @@ Podemos escrever expressões aninhadas como:
 (* (+ 2 (* 4 6))
    (+ 3 5 7))
 #+end_src
+
+: 390
+
 
 em forma de árvore.
 
@@ -66,26 +69,35 @@ the <formal parameters> are grouped within parentheses, just as they
 would be in an actual call to the procedure being defined.
 "
 
-#+begin_src scheme :session sicp
+#+begin_src scheme :session sicp :export both
 (square 21)
 #+end_src
+
+: 441
+
 
 #+begin_src scheme :session sicp  :results none
 (define (sum-of-squares x y)
   (+ (square x) (square y)))
 #+end_src
 
-#+begin_src scheme :session sicp
+#+begin_src scheme :session sicp :export both
 (sum-of-squares 3 4)
 #+end_src
 
+: 25
+
+
 Agora podemos usar a =sum-of-squares= como bloco de construção de procedimentos.
 
-#+begin_src scheme :session sicp
+#+begin_src scheme :session sicp :export both :results value
 (define (f a)
   (sum-of-squares (+ a 1) (* a 2)))
 (f 5)
 #+end_src
+
+: 136
+
 
 Procedimentos compostos são usados da mesma forma que procedimentos primitivos, ou seja, não podemos diferenciá-los de =*= ou =+=.
 ** 1.1.5 O modelo de substiruição para aplicações de procedimentos
