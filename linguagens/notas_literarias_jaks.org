@@ -1,0 +1,91 @@
+# Created 2026-02-16 seg 10:03
+#+title: Structure and interpretation of computer programs(SICP)
+#+author: Erik Ap Gomes Rocha
+#+export_file_name: ~/Projetos/Codigos/Estudos-em-Redes-e-Linguagens/linguagens/notas_literarias_jaks.org
+* Source
+
+Author: Hal Abelson, Jerry Sussman and Julie Sussman
+Title: Structure and interpretation of computer programs(SICP)
+Year: 1993
+* Summary
+
+
+* Capítulo 1 - Construindo abstrações com procedimentos
+
+Vamos estudas a ideia de processos computacionais.
+** 1.3.1 Avaliando combinações
+
+Isso mostra como 2 coisas:
+1. explicita a ordem das avaliações
+2. mostra que é um processo naturalmente recursivo
+
+Podemos escrever expressões aninhadas como:
+#+begin_src scheme
+(* (+ 2 (* 4 6))
+   (+ 3 5 7))
+#+end_src
+
+em forma de árvore.
+
+#+caption: Representação em árvore
+[[file:ch1-Z-G-1.gif]]
+
+E isso demonstra a importância da recursividade trabalhando com arvores hierárquicas.
+
+Casos primitivos:
+- valor de números são os números que eles nomeiam
+- valor dos operadores built-in são as instruções sequências de máquina que correspendem com eles
+- valor de outros nomes são os objetos associados a esses nomes no ambiente
+
+Note que definições não são combinações e não estão descritas pelos princípios.
+
+Exceções como essas são chamadas de formas especiais.
+** 1.1.4 Procedimentos compostos
+
+Podemos nomear a composição de procedimentos e chamá-la como se fosse uma unidade.
+Exemplo:
+#+begin_src scheme :session sicp :results none
+(define (square x) (* x x))
+#+end_src
+
+Esta é a composição do procedimento (* x x) e de nomeá-lo de square.
+
+Forma geral:
+(define (<name> <formal parameters>) <body>)
+
+- Separar as definições abaixo em uma lista
+
+Onde:
+"The <name> is a symbol to be associated with the procedure definition in
+the environment.13 The <formal parameters> are the names used within
+the body of the procedure to refer to the corresponding arguments of the
+procedure. The <body> is an expression that will yield the value of the
+procedure application when the formal parameters are replaced by the
+actual arguments to which the procedure is applied.14 The <name> and
+the <formal parameters> are grouped within parentheses, just as they
+would be in an actual call to the procedure being defined.
+"
+
+#+begin_src scheme :session sicp
+(square 21)
+#+end_src
+
+#+begin_src scheme :session sicp  :results none
+(define (sum-of-squares x y)
+  (+ (square x) (square y)))
+#+end_src
+
+#+begin_src scheme :session sicp
+(sum-of-squares 3 4)
+#+end_src
+
+Agora podemos usar a =sum-of-squares= como bloco de construção de procedimentos.
+
+#+begin_src scheme :session sicp
+(define (f a)
+  (sum-of-squares (+ a 1) (* a 2)))
+(f 5)
+#+end_src
+
+Procedimentos compostos são usados da mesma forma que procedimentos primitivos, ou seja, não podemos diferenciá-los de =*= ou =+=.
+** 1.1.5 O modelo de substiruição para aplicações de procedimentos
