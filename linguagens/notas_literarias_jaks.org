@@ -1,4 +1,4 @@
-# Created 2026-02-16 seg 11:47
+# Created 2026-02-19 qui 13:18
 #+title: Structure and interpretation of computer programs(SICP)
 #+author: Erik Ap Gomes Rocha
 #+export_file_name: ~/Projetos/Codigos/Estudos-em-Redes-e-Linguagens/linguagens/notas_literarias_jaks.org
@@ -24,9 +24,6 @@ Podemos escrever expressões aninhadas como:
 (* (+ 2 (* 4 6))
    (+ 3 5 7))
 #+end_src
-
-: 390
-
 
 em forma de árvore.
 
@@ -69,10 +66,11 @@ the <formal parameters> are grouped within parentheses, just as they
 would be in an actual call to the procedure being defined.
 "
 
-#+begin_src scheme :session sicp :export both
+#+begin_src scheme :session sicp :exports both
 (square 21)
 #+end_src
 
+#+results: 
 : 441
 
 
@@ -81,21 +79,23 @@ would be in an actual call to the procedure being defined.
   (+ (square x) (square y)))
 #+end_src
 
-#+begin_src scheme :session sicp :export both
+#+begin_src scheme :session sicp :exports both
 (sum-of-squares 3 4)
 #+end_src
 
+#+results: 
 : 25
 
 
 Agora podemos usar a =sum-of-squares= como bloco de construção de procedimentos.
 
-#+begin_src scheme :session sicp :export both :results value
+#+begin_src scheme :session sicp :exports both :results value
 (define (f a)
   (sum-of-squares (+ a 1) (* a 2)))
 (f 5)
 #+end_src
 
+#+results: 
 : 136
 
 
