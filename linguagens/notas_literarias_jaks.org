@@ -207,3 +207,116 @@ Para construção dos predicados =<=, =>= e === é feita como constructos de pre
   - É uma forma especial pois nem todas expressões <e> precisam ser avaliadas.
 - =(not <e>)= inverte o valor lógico de <e>.
   - É um procedimento comum.
+** Exercícios
+*** Ex 1.1
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+10
+#+end_src
+
+#+results: 
+: 10
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(+ 5 3 4)
+#+end_src
+
+#+results: 
+: 12
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(- 9 1)
+#+end_src
+
+#+results: 
+: 8
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(/ 6 2)
+#+end_src
+
+#+results: 
+: 3
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(+ (* 2 4) (- 4 6))
+#+end_src
+
+#+results: 
+: 6
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(define a 3)
+#+end_src
+
+#+results: 
+: #<unspecified>
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(define b (+ a 1))
+#+end_src
+
+#+results: 
+: #<unspecified>
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(+ a b (* a b))
+#+end_src
+
+#+results: 
+: 19
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(= a b)
+#+end_src
+
+#+results: 
+: #f
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(if (and (> b a) (< b (* a b)))
+    b
+    a)
+#+end_src
+
+#+results: 
+: 4
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(cond ((= a 4) 6)
+      ((= b 4) (+ 6 7 a))
+      (else 25))
+#+end_src
+
+#+results: 
+: 16
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(+ 2 (if (> b a) b a))
+#+end_src
+
+#+results: 
+: 6
+
+
+#+begin_src scheme :tangle exercicios/ex11.scm
+(* (cond ((> a b) a)
+         ((< a b) b)
+         (else -1))
+   (+ a 1))
+#+end_src
+
+#+results: 
+: 16
