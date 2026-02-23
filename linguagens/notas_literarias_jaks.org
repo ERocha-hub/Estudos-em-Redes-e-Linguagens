@@ -101,3 +101,109 @@ Agora podemos usar a =sum-of-squares= como bloco de construção de procedimento
 
 Procedimentos compostos são usados da mesma forma que procedimentos primitivos, ou seja, não podemos diferenciá-los de =*= ou =+=.
 ** 1.1.5 O modelo de substiruição para aplicações de procedimentos
+
+Os procedimentos de combinações compostas são substituidos e avaliados como se espera.
+
+Sendo =f= definido como em 1.1.4:
+#+begin_src scheme :exports code
+(f 5)
+#+end_src
+
+será =f= substituido por:
+#+begin_src scheme :exports code
+(sum-of-squares (+ a 1) (* a 2))
+#+end_src
+
+Substituindo o valor de =a=5=:
+#+begin_src scheme :exports code
+(sum-of-squares (+ 5 1) (* 5 2))
+#+end_src
+
+Aplicando a definição de =sum-of-sqares=: 
+#+begin_src scheme :exports code
+(+ (square 6) (square 10))
+#+end_src
+
+Aplicando a definição de =square=:
+#+begin_src scheme :exports code
+(+ (* 6 6) (* 10 10))
+#+end_src
+
+Resuntando em:
+#+begin_src scheme :exports code
+(+ 36 100)
+#+end_src
+
+e
+#+begin_src scheme :exports code
+136
+#+end_src
+
+Este processo é chamado de =modelo de substiruição= para aplicação de procedimentos.
+
+Obs:
+- o modelo de substituição é uma questão didática. Na prática, o interpretador funciona de outra forma(cap 3-4).
+- o modelo de substituição é um modelo simples, portanto, incompleto. Até o fim do livro, chegaremos em um modelo mais refinado e completo.
+*** Ordem aplicativa vs ordem normal
+
+No modelo mostrado, primeiro avaliamos o valor explicito das funções internas e, posteriormente, substituimos o procedimento. Outra forma de fazê-lo seria substiruir todos os procedimentos antes de avaliar os resultados, ou seja:
+
+#+begin_src scheme :exports code
+(f 5)
+(sum-of-squares (+ 5 1) (* 5 2))
+(+    (square (+ 5 1))      (square (* 5 2))  )
+(+    (* (+ 5 1) (+ 5 1))   (* (* 5 2) (* 5 2)))
+(+         (* 6 6)             (* 10 10))
+(+           36                   100)
+                    136
+#+end_src
+
+Isso dá a mesma resposta. Esse processo de "Expansão completa e então redução" é chamado de =avaliação de ordem-normal=, em contraste com "avaliação dos argumentos e depois aplicação" que é o metodo que o interpretador realmente usa, chamado =avaliação de ordem-aplicativa=.
+
+Lisp usa =avaliação de ordem-aplicativa=, por otimizações como no caso da aplicação =(+ 5 1)= poder ser substituida por =6=, o que simplifica o processo de avaliação.
+** 1.1.6 Expressões condicionais e Predicados
+
+Até o momento não definimos procedimentos pra lidar com resultados diferentes a partir de testes(condicionais). Esse constructo é chamado de =análise de caso= que é uma forma especial.
+
+No caso de Lisp, usamos =cond= como segue:
+#+begin_src scheme :exports code
+(define (abs x)
+  (cond ((> x 0) x)
+        ((= x 0) 0)
+        ((< x 0) (- x))))
+#+end_src
+
+Ou, de forma geral:
+#+begin_src scheme :exposts code
+(cond (<p1> <e1>)
+      (<p2> <e2>)
+...
+      (<pn> <en>))
+#+end_src
+
+Consistindo do simbolo =cond= seguido por pares em parenteses (<p> <e>) chamados de cláusulas. <p> é um predicado, se seu valor for verdadeiro a expressão <e> é avalidada, se for falso, não.
+- em scheme, falso é dados por =#f= e verdadeiro por qualquer outro valor, mas é conveniente usar =#t=.
+
+Os predicados <p1>, <p2>, ... são avaliados em ordem até ser encontrado o primeiro valor verdadeiro.
+
+=Predicado= é usado para procedimentos que dão resultado verdadeiro ou falso.
+
+Outra forma de exprever a mesma expressão é:
+#+begin_src scheme :exports code
+(define (abs x)
+  (cond ((< x 0) (- x))
+        (else x)))
+#+end_src
+
+Ou:
+=if= pode ser usado se existem precisamente 2 casos condicionais. Ou seja, =(if <predicate> <consequent> <alternative>)=.
+
+Para construção dos predicados =<=, =>= e === é feita como constructos de predicados compostos com base nas funções:
+- =(and <e1> ... <en>)= onde o valor da expressão é verdadeiro se todos os <e> forem verdadeiros e falso caso contrário.
+  - As expressões são avaliadas da esquerda pra direita.
+  - É uma forma especial pois nem todas expressões <e> precisam ser avaliadas.
+- =(or <e1> ... <en>)= onde o valor da expressão é verdadeiro se algum dos <e> forem verdadeiros e falso caso contrário.
+  - As expressões são avaliadas da esquerda pra direita.
+  - É uma forma especial pois nem todas expressões <e> precisam ser avaliadas.
+- =(not <e>)= inverte o valor lógico de <e>.
+  - É um procedimento comum.
